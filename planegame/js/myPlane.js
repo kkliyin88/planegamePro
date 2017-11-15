@@ -40,7 +40,7 @@ myPlane={
 			    console.log("子弹的数量:"+gameEngine.allBullets.length)
       			console.log("敌机的数量:"+gameEngine.allEnarmys.length)
       			
-			   },1000)
+			   },300)
      }//fire
 
 	

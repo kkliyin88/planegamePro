@@ -1,18 +1,22 @@
 //创建敌机 构造函数,调ini的时候创建出不同的飞机
-function Enarmy(type){
+class Enarmy  extends Base{
 	
-	this.speed=5
-	this.active=3
-	this.score=1
-	this.dieimgs=[]
-	this.init=function(){
-		this.ele=document.createElement("div")
+	constructor(type){
+		super();
+		this.ele = null;
+		this.speed=5;
+		this.active=3;
+		this.score=1;
+		this.dieimgs=[];
+		this.type=type;
+	}
+	
+	init(){
+		this.ele = document.createElement("div");
 		gameEngine.ele.appendChild(this.ele)
 		gameEngine.allEnarmys.push(this)
 		//为什么使用this而不是this.ele
-		
-		
-		switch(type){
+		switch(this.type){
 			case this.Enarmy_Type_Large:
 				this.ele.className="enemy-large";
 				this.speed=this.Enarmy_Speed_Large;
@@ -42,20 +46,21 @@ function Enarmy(type){
 		return this 
 	}//init
 	
-	this.move=function(){
-		var that=this
-		this.timer=setInterval(function(){
-			if(that.ele.offsetTop > gameEngine.ele.offsetHeight){
+	move(){
+	  
+		this.timer=setInterval(()=>{
+			 console.log("kk"+this.ele)
+			if(this.ele.offsetTop > gameEngine.ele.offsetHeight){
 				clearInterval(this.timer);
 				gameEngine.ele.removeChild(this.ele);
-				gameEngine.allEnarmys.splice(gameEngine.allEnarmys.indexOf(that),1)
+				gameEngine.allEnarmys.splice(gameEngine.allEnarmys.indexOf(this),1)
 			}else{
-			that.ele.style.top = that.ele.offsetTop + that.speed*3 + "px";
+			this.ele.style.top = this.ele.offsetTop + this.speed*3 + "px";
 			}
 		},100)
 	}
 	
-	this.hurt=function(){
+	hurt(){
 		this.active--;
 		if(this.active==0){
 		this.burn()
@@ -63,19 +68,17 @@ function Enarmy(type){
 	}
 	
 	
-	this.burn=function(){
-		var that=this
-		var i=0
-		var dietimer=setInterval(function(){
-				if(i>=that.dieimgs.length){
+	burn(){
+
+		let i=0
+		let dietimer=setInterval(()=>{
+				if(i>=this.dieimgs.length){
 			clearInterval(dietimer)
-			gameEngine.allEnarmys.splice(gameEngine.allEnarmys.indexOf(that),1)
-		 
-			
+			gameEngine.ele.removeChild(this.ele);
+			gameEngine.allEnarmys.splice(gameEngine.allEnarmys.indexOf(this),1)
 		}
-		else{that.ele.style.background="url("+ that.dieimgs[i++] +")";
+		else{this.ele.style.background="url("+ this.dieimgs[i++] +")";
 		}
-		
 		},200)
 	}
 }//func
@@ -97,4 +100,4 @@ Enarmy.prototype.Enarmy_Active_Small=1
 
 Enarmy.prototype.Enemy_Score_Large =3; 
 Enarmy.prototype.Enemy_Score_Middle =2;
-Enarmy.prototype.Enemy_Score_Small =2;
+Enarmy.prototype.Enemy_Score_Small =1;

@@ -1,10 +1,11 @@
 var gameEngine={
+		
 		ele:null,
 		allBullets:[],
 		allEnarmys:[],
 		totalscore:0,
 		init:function(){
-			this.ele=document.getElementById("main")
+		this.ele=document.getElementById("main")
 			return this
 		},
 		 
@@ -50,7 +51,7 @@ var gameEngine={
 			},400)
 		},//load
 			//添加键盘移动事件
-	keymove:function(){
+	keymove:()=>{
 		 var xspeed=0
 		 var yspeed=0
 		console.log("进入键盘监听事件")
@@ -77,13 +78,12 @@ var gameEngine={
 			}
 		}
 	   
-	   timer=setInterval(function(e){
-	   	    e=e||event
+	   timer=setInterval(()=>{
 		   	var x=myPlane.ele.offsetLeft+xspeed
 		   	var y=myPlane.ele.offsetTop+yspeed
 		   	if(x<0){x=0;}
-//		   	if(x>gameEngine.ele.offsetWidth-myPlane.ele.offsetWidth)
-//		   	{x=gameEngine.ele.offsetWidth-myPlane.ele.offsetWidth;}
+		   	if(x>gameEngine.ele.offsetWidth-myPlane.ele.offsetWidth)
+		   	{x=gameEngine.ele.offsetWidth-myPlane.ele.offsetWidth;}
 		   	myPlane.ele.style.left=x+"px"
 		   	myPlane.ele.style.top=y+"px"
 		   },30)
@@ -91,54 +91,36 @@ var gameEngine={
 	
 	createEnarmy:function(){
 		//创建大型机
-		console.log("创建敌机")
 		setInterval(function(){
 			if(Math.random()>0.7){
-				var enarmy=new Enarmy(3)
+			 var  enarmy=new  Enarmy(3)
 				enarmy.init().move();}
 			
 		},6000)
 		//创建中型机
-		var that=this
-		setInterval(function(){
+		setInterval(()=>{
 			if(Math.random()>0.5){
-				var enarmy=new Enarmy(2)
+				  var enarmy=new  Enarmy(2)
 				enarmy.init().move();}
 			
 		},6000)
 		//创建小型机
-		setInterval(function(){
+		setInterval(()=>{
 			if(Math.random()>0.3){
-				var enarmy=new Enarmy(1)
+				 var  enarmy=new  Enarmy(1)
 				enarmy.init().move();}
 		},1000)
 	},//createEnarmy
      //添加碰撞事件
-      crash:function(){
-      	var that=this
-    
-      	var timer=setInterval(function(){
-      		
-      		
+      crash:()=>{
+      	var timer=setInterval(()=>{
       	for(var i=0;i<gameEngine.allEnarmys.length;i++){
       		for(var j=0;j<gameEngine.allBullets.length;j++){
-      			
       			var kk=isCrash(gameEngine.allEnarmys[i].ele,gameEngine.allBullets[j].ele )
-      			
-      			
-      			
       			if( isCrash(gameEngine.allEnarmys[i].ele,gameEngine.allBullets[j].ele) )
-      		       
       			{ 
-      					 console.log("哎，打到飞机了")
-      					 console.log()
-      				
-      					 
       				gameEngine.allEnarmys[i].hurt();
-      				
-      				//子弹爆炸
       				gameEngine.allBullets[j].burn();
-      				
 					gameEngine.allBullets.splice(j,1)
 					
 					
